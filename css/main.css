@@ -1,0 +1,40 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+
+.queue-item {
+    display: inline-block;
+    width: 5px;
+    height: 1em;
+    vertical-align: middle;
+    border: 1px solid #aaa;
+}
+.gray {
+    background-color: saddlebrown;
+}
+.gold {
+    background-color: #FFD700;
+}
+.silver {
+    background-color: #C0C0C0;
+}
+.platinum {
+    background-color: #E5E4E2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
