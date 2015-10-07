@@ -1,35 +1,7 @@
 $(document).ready(function () {
-  var mRoomDataURL = "https://mroom.asioi.fi/api/pob-info-with-queue?city=Tampere"
-  //jsonp(mRoomDataURL, "queueHandler"); 
-
   app.init();
 
 });
-
-
-function jsonp(url, callbackName) {                
-  if (url.indexOf("?") > -1)
-    url += "&callback="; 
-  else
-    url += "?callback="; 
-  url += callbackName + "&";
-  url += new Date().getTime().toString(); // prevent caching        
-  
-  var script = document.createElement("script");        
-  script.setAttribute("src", url);
-  script.setAttribute("type","text/javascript");                
-  document.body.appendChild(script);
-}
-
-
-function queueHandler(queueData) {
-  console.log(queueData);
-  var source = $("#shop-template").html();
-  var template = Handlebars.compile(source);
-  var context = {'shops': queueData};
-  var html = template(context);
-  $('#data').html(html);
-}
 
 Handlebars.registerHelper("queueBars", function(options) {
   var out = "";
@@ -73,3 +45,11 @@ Handlebars.registerHelper("countQueue", function(options) {
   }
   return options.fn({"count": count});
 });
+Handlebars.registerHelper("select", function(option, value) {
+  if (option == value) {
+    return ' selected';
+  } else {
+    return '';
+  }
+});
+

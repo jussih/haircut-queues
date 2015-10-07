@@ -1,5 +1,15 @@
 var app = function () {
   
+  // https://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/
+  Backbone.View.prototype.close = function(){
+    this.remove();
+    this.unbind();
+    if (this.onClose){
+      this.onClose();
+    }
+  }
+
+
   //MODELS
   var Shop = Backbone.Model.extend();
 
@@ -46,22 +56,38 @@ var app = function () {
   });
 
   var ShopList = Backbone.View.extend({
-    el: '#data',  // bind to the existing DOM element
-    //events: {
-    //  "change #city-select": "render"
-    //},
-    template: Handlebars.compile($("#shop-template").html()),
+    el: '#app',  // bind to the existing DOM element
+    events: {
+      "change #city-selector": "changeCity"
+    },
+    selectTemplate: Handlebars.compile($("#select-template").html()),
     initialize: function ShopListInitialize() {
+      this.citySelector = this.$("#city-selector");
       this.city = "Tampere";
-      this.listenTo(this.collection, "reset", this.render);  // the collection will be reset (loaded from the api) at app init, draw contents then
+      this.childViews = [];  // must keep track of child views for cleanup in replaceContent
+      this.listenTo(this.collection, "reset", this.reset);  // the collection will be reset (loaded from the api) at app init, draw contents then
+    },
+    reset: function () {
+      this.citySelector.removeClass('hide');
+      this.render();
+      this.replaceContent();
     },
     render: function ShopListRender() {
-      var ths = this;
+      cities = _.uniq(this.collection.pluck('city')).sort();
+      this.$("#city-selector").html(this.selectTemplate({options: cities, selected: this.city}));
+    },
+    replaceContent: function ShopListReplaceContent() {
+      _.invoke(this.childViews, "close");
       var cityShops = this.collection.filter({city: this.city});
       _.each(cityShops, function(shop) {
         shopView = new window.app.views.ShopView({model: shop});
-        ths.$el.append(shopView.render().el);
-      });
+        this.$('#shop-data').append(shopView.render().el);
+        this.childViews.push(shopView);
+      }, this);
+    },
+    changeCity: function ShopListChangeCity() {
+      this.city = this.citySelector.val();
+      this.replaceContent();
     }
   });
 
