@@ -63,12 +63,13 @@ var app = function () {
     selectTemplate: Handlebars.compile($("#select-template").html()),
     initialize: function ShopListInitialize() {
       this.citySelector = this.$("#city-selector");
+      this.loadingNotification = this.$(".loader");
       this.city = "Tampere";
       this.childViews = [];  // must keep track of child views for cleanup in replaceContent
       this.listenTo(this.collection, "reset", this.reset);  // the collection will be reset (loaded from the api) at app init, draw contents then
     },
     reset: function () {
-      this.citySelector.removeClass('hide');
+      this.loadingNotification.addClass('hide');
       this.render();
       this.replaceContent();
     },
