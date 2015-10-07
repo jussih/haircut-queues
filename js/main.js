@@ -1,7 +1,9 @@
 $(document).ready(function () {
   var mRoomDataURL = "https://mroom.asioi.fi/api/pob-info-with-queue?city=Tampere"
+  //jsonp(mRoomDataURL, "queueHandler"); 
 
-  jsonp(mRoomDataURL, "queueHandler"); 
+  app.init();
+
 });
 
 
