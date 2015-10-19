@@ -67,6 +67,7 @@ var app = function () {
       this.city = "Tampere";
       this.childViews = [];  // must keep track of child views for cleanup in replaceContent
       this.listenTo(this.collection, "reset", this.reset);  // the collection will be reset (loaded from the api) at app init, draw contents then
+      this.listenTo(this, "city:change", this.routeCity);
     },
     reset: function () {
       this.loadingNotification.addClass('hide');
@@ -74,6 +75,7 @@ var app = function () {
       this.replaceContent();
     },
     render: function ShopListRender() {
+      router.navigate("city/" + this.city);
       cities = _.uniq(this.collection.pluck('city')).sort();
       this.$("#city-selector").html(this.selectTemplate({options: cities, selected: this.city}));
     },
@@ -81,28 +83,51 @@ var app = function () {
       _.invoke(this.childViews, "close");
       var cityShops = this.collection.filter({city: this.city});
       _.each(cityShops, function(shop) {
-        shopView = new window.app.views.ShopView({model: shop});
+        shopView = new ShopView({model: shop});
         this.$('#shop-data').append(shopView.render().el);
         this.childViews.push(shopView);
       }, this);
     },
     changeCity: function ShopListChangeCity() {
       this.city = this.citySelector.val();
+      router.navigate("city/" + this.city);
+      this.replaceContent();
+    },
+    routeCity: function(city) {
+      // router city selection handler
+      this.city = city;
+      this.citySelector.val(city);
       this.replaceContent();
     }
   });
 
+
+  //ROUTER
+  var Router = Backbone.Router.extend({
+    routes: {
+      "city/:city": "selectCity",
+    },
+    selectCity: function (city) {
+      window.app.views.main.trigger('city:change', city);
+    }
+  });
+
+  router = new Router();
+
+
   var init = function appInit() {
-    shops = new this.collections.Shops();
+    shops = new Shops();
     shops.fetch({reset: true});
-    var mainView = new this.views.ShopList({collection: shops});
+    var mainView = new ShopList({collection: shops});
+    this.collections.shops = shops;
+    this.views.main = mainView;
+    Backbone.history.start(); // start tracking routes
     console.log("app started");
   };
 
   return {
-    models: {Shop: Shop},
-    collections: {Shops: Shops},
-    views: {ShopView: ShopView, ShopList: ShopList},
     init: init,
+    collections: {},
+    views: {}
   }
 }();
