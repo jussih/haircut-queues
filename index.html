@@ -30,31 +30,24 @@ body {
 
     <div id="app" class="container">
       <select id="city-selector" class="form-control"></select>
-      <table class="table">
-        <thead>
-          <th>Nimi</th>
-          <th>Aukiolo</th>
-          <th>Jono</th>
-          <th>White</th>
-          <th>Silver</th>
-          <th>Gold</th>
-          <th>Platinum</th>
-        </thead>
-        <tbody id="shop-data">
-        </tbody>
-      </table>
+      <div id="shop-data">
+      </div>
       <div class="loader">Loading...</div>
     </div> <!-- /container -->
 
     <!-- handlebars templates -->
     <script id="shop-template" type="text/x-handlebars-template">
-      <td>{{name}}</td>
-      <td>{{start}} - {{end}}</td>
-      <td>{{queue.count}}</td>
-      <td>{{#countQueue type="White"}}{{count}}{{/countQueue}}</td>
-      <td>{{#countQueue type="Silver"}}{{count}}{{/countQueue}}</td>
-      <td>{{#countQueue type="Gold"}}{{count}}{{/countQueue}}</td>
-      <td>{{#countQueue type="Platinum"}}{{count}}{{/countQueue}}</td>
+      <div class="shop-info">
+        <span class="shop-name">{{ name }}</span>
+        <span class="shop-opening-hours">{{ start }} - {{ end }}</span>
+      </div>
+      <div class="queue-container">
+        <div class="queue-box queue-platinum">{{countQueue "Platinum"}}</div>
+        <div class="queue-box queue-gold">{{countQueue "Gold"}}</div>
+        <div class="queue-box queue-silver">{{countQueue "Silver"}}</div>
+        <div class="queue-box queue-white">{{countQueue "White"}}</div>
+        <div class="queue-box queue-cardless">{{countQueue "Cardless"}}</div>
+      </div>
     </script>
     <script id="select-template" type="text/x-handlebars-template">
       {{#each options}}

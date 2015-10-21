@@ -1,11 +1,11 @@
 html, body {
   background-color: #111;
   /*font-family: Calibri, Arial, sans-serif;*/
-  color: #ccc;
+  color: #E4E4E4;
 }
 
 .jumbotron {
-  background: url(../sakset.jpg) center / cover no-repeat;
+  background: url(../sakset.jpg) center no-repeat;
   color: #f5f5f5;
   text-shadow: 1px 0px 0px #757575;
 }
@@ -24,29 +24,70 @@ html, body {
     vertical-align: middle;
     border: 1px solid #aaa;
 }
-.gray {
-    background-color: saddlebrown;
+.queue-cardless {
+    background-color: rgb(119, 89, 67);
 }
-.gold {
-    background-color: #FFD700;
+.queue-white {
+    background-color: #FFF;
 }
-.silver {
-    background-color: #C0C0C0;
+.queue-silver {
+    background-color: rgb(175, 179, 189);
 }
-.platinum {
-    background-color: #E5E4E2;
+.queue-gold {
+    background-color: rgb(240, 213, 61);
+}
+.queue-platinum {
+    background-color: #D3D1DB;
 }
 .hide {
   display: none;
 }
 
+#shop-data {
+  width: 100%;
+  margin: 5px 0;
+}
+.shop-row {
+  /*outline: 1px solid red;*/
+  box-sizing: content-box;
+  width: 100%;
+  height: 2em;
+  line-height: 2em;
+  font-size: 24px;
+  border-bottom: 1px solid #222;
+  position: relative;
+}
+.queue-container {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+.queue-box {
+  float: right;
+  width: 2em;
+  text-align: center;
+  margin-left: 1px;
+  color: rgba(0,0,0,0.6);
+}
+.shop-opening-hours {
+  font-size: 0.5em;
+  color: #7A7A7A;
+}
+
+.shop-info {
+  margin-right: 10em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 
+@media (max-width: 768px) {
+  .shop-row {
+    font-size: 1em;
+  }
 
-
-
-
-
+}
 
 
 

@@ -46,7 +46,7 @@ var app = function () {
   //VIEWS
   var ShopView = Backbone.View.extend({
     // creates a new <tr class="shop-row"> dom element
-    tagName: 'tr',
+    tagName: 'div',
     className: 'shop-row',
     template: Handlebars.compile($("#shop-template").html()),
     render: function ShopViewRender() {
