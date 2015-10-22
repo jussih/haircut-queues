@@ -57,6 +57,10 @@ html, body {
   border-bottom: 1px solid #222;
   position: relative;
 }
+.shop-row.closed .shop-name {
+  color: #7A7A7A;
+  font-style: italic;
+}
 .queue-container {
   position: absolute;
   right: 0px;

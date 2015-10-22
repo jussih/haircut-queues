@@ -41,15 +41,27 @@ var app = function () {
       };
       Backbone.Collection.prototype.fetch.call(this, options);
     },
+    parse: function(response) {
+      return _.filter(response, function(n) { return n.name != "uutiskirje" });
+    }
   });
   
   //VIEWS
   var ShopView = Backbone.View.extend({
-    // creates a new <tr class="shop-row"> dom element
+    // creates a new <div class="shop-row"> dom element
     tagName: 'div',
     className: 'shop-row',
     template: Handlebars.compile($("#shop-template").html()),
+    initialize: function ShopViewInitialize() {
+      this.listenTo(this.model, "change", this.render);
+    },
     render: function ShopViewRender() {
+      q = this.model.get("queue");
+      if (q.count == "closed") {
+        this.$el.addClass("closed");
+      } else {
+        this.$el.removeClass("closed");
+      }
       this.$el.html(this.template(this.model.attributes));
       return this; 
     }
